@@ -8,4 +8,5 @@ router.post('/login' ,userController.login);
 router.post('/logout',userController.logout )
 
 router.put('/update-profile' , protected ,userController.updateProfile)
+router.get('/check',protected,userController.checkAuth)
 module.exports =router

@@ -2,6 +2,7 @@ const User = require("../models/user.model")
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const generateToken = require("../lib/token")
+const cloudinary  = require("../lib/cloudinary")
 
 const signup=async(req,res)=>{
     console.log('hitting the route')
@@ -83,7 +84,29 @@ const logout=(req,res)=>{
 
 const updateProfile=async(req,res)=>{
     console.log('htting the update profile route')
-    
+    try {
+        const {profilePic}=req.body;
+        const userId=req.user._id
+
+        if(!profilePic){
+            return res.status(400).json({message:'profile pic is required'})
+        }
+        const uplaodResponse=await cloudinary.uploader.upload(profilePic)
+        const updatedUser=await User.findByIdAndUpdate(userId,{profilePic:uplaodResponse.secure_url},{new:true})
+        res.status(200).json(updatedUser)
+    } catch (error) {
+        console.log('error in the profile upload controller',error)
+        res.status(500).json({message:"Internal server error"})
+    }
 }
 
-module.exports={signup,login,logout,updateProfile}
+const checkAuth=async(req,res)=>{
+    try {
+        res.status(200).json(req.user)
+    } catch (error) {
+        console.log('error in the check auth controller',error)
+        res.status(500).json({message:'internal server error'})
+    }
+}
+
+module.exports={signup,login,logout,updateProfile,checkAuth}
