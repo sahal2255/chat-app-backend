@@ -7,7 +7,7 @@ const cloudinary  = require("../lib/cloudinary")
 const signup=async(req,res)=>{
     console.log('hitting the route')
     console.log('body',req.body)
-    const {fullName,email,password}=req.body
+    const {name:fullName,email,password}=req.body
     try {
         if(!fullName || !email ||!password){
             return res.status(400).json({message:'All fields are required '})
@@ -46,6 +46,7 @@ const signup=async(req,res)=>{
 }
 
 const login=async(req,res)=>{
+    console.log('hitting to the login controller')
     const {email,password}=req.body
     try {
         if(!email || !password){
