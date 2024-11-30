@@ -86,10 +86,13 @@ const logout=(req,res)=>{
 const updateProfile=async(req,res)=>{
     console.log('htting the update profile route')
     try {
+        console.log('req body',req.body)
         const {profilePic}=req.body;
+        console.log(profilePic)
         const userId=req.user._id
 
         if(!profilePic){
+            console.log('not recieving the image file')
             return res.status(400).json({message:'profile pic is required'})
         }
         const uplaodResponse=await cloudinary.uploader.upload(profilePic)
