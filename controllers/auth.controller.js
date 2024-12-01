@@ -48,11 +48,14 @@ const signup=async(req,res)=>{
 const login=async(req,res)=>{
     console.log('hitting to the login controller')
     const {email,password}=req.body
+    console.log('email',email)
     try {
         if(!email || !password){
+            console.log('no email and password recieved')
             return res.status(400).json({message:'all fields are required'})
         }
         const user=await User.findOne({email})
+        console.log('founded user',user)
         if(!user){
             return res.status(400).json({message:'invalid'})
         }
@@ -88,7 +91,7 @@ const updateProfile=async(req,res)=>{
     try {
         console.log('req body',req.body)
         const {profilePic}=req.body;
-        console.log(profilePic)
+        // console.log(profilePic)
         const userId=req.user._id
 
         if(!profilePic){
