@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const Messages = require('../models/message.model');
 const cloudinary=require('../lib/cloudinary')
 const getUsersSidebar=async(req,res)=>{
-    console.log('message controller')
+    console.log('message controller users')
     try {
         const loggedInUserId=req.user._id;
         const filteredUsers=await User.find({_id:{$ne:loggedInUserId}}).select('-password')
@@ -33,8 +33,9 @@ const getMessages=async(req,res)=>{
 const sendMessages=async(req,res)=>{
     try {
         const {text,image}=req.body;
+        console.log('text',text)
         const {id:receiverId}=req.params;
-        const userId=req.user._id;
+        const senderId=req.user._id;
 
         let imageUrl;
         if(image){

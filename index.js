@@ -21,7 +21,7 @@ app.use(cors({
     credentials:true
 }))
 app.use('/api/auth',authRoute);
-app.use('/api/message',messageRoute)
+app.use('/api/messages',messageRoute)
 
 
 
