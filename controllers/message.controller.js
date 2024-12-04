@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const User = require('../models/user.model');
 const Messages = require('../models/message.model');
 const cloudinary=require('../lib/cloudinary');
-const { getMessageSocketId } = require('../lib/socket');
+const { getMessageSocketId ,io} = require('../lib/socket');
 const getUsersSidebar=async(req,res)=>{
     console.log('message controller users')
     try {
@@ -57,7 +57,7 @@ const sendMessages=async(req,res)=>{
         const receiverSocketId=getMessageSocketId(receiverId)
         if(receiverSocketId){
             io.to(receiverSocketId).emit('newMessage',newMessage)
-            
+
         }
         res.status(201).json(newMessage)
     } catch (error) {
