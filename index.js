@@ -6,9 +6,9 @@ const cookieParser=require('cookie-parser')
 const messageRoute=require('./routes/message.route.js')
 const cors=require('cors')
 const bodyParser=require('body-parser')
+const {app,server}=require('./lib/socket.js')
 dotenv.config()
 
-const app=express();
 
 const PORT=process.env.PORT
 
@@ -25,7 +25,7 @@ app.use('/api/messages',messageRoute)
 
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`server running on port ${PORT}`)
     connectDB()
 })
